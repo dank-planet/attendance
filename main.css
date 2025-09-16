@@ -63,6 +63,11 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    
+    /* --- THIS IS THE FIX --- */
+    /* This padding ensures the first and last items can snap to the center */
+    padding: 0 40%;
+    box-sizing: border-box;
 }
 
 .student-wheel-container::-webkit-scrollbar {
@@ -452,6 +457,7 @@ body {
         width: 90%;
     }
 }
+
 
 
 
