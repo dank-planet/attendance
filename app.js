@@ -120,17 +120,19 @@ document.addEventListener('DOMContentLoaded', () => {
      * Updates with a simple, smooth animation.
      */
     function updateWheelAnimation() {
-        const containerCenter = studentWheelContainer.offsetWidth / 2;
-        const scrollLeft = studentWheelContainer.scrollLeft;
-        document.querySelectorAll('.student-tab').forEach(tab => {
-            const tabCenter = tab.offsetLeft - scrollLeft + tab.offsetWidth / 2;
-            const distanceFromCenter = tabCenter - containerCenter;
-            const scale = 1 - Math.abs(distanceFromCenter / containerCenter) * 0.3;
-            const opacity = 1 - Math.abs(distanceFromCenter / containerCenter) * 0.5;
-            tab.style.transform = `scale(${Math.max(0.7, scale)})`;
-            tab.style.opacity = `${Math.max(0.5, opacity)}`;
-        });
-    }
+    const containerCenter = studentWheelContainer.offsetWidth / 2;
+    const scrollLeft = studentWheelContainer.scrollLeft;
+    document.querySelectorAll('.student-tab').forEach(tab => {
+        const tabCenter = tab.offsetLeft - scrollLeft + tab.offsetWidth / 2;
+        const distanceFromCenter = tabCenter - containerCenter;
+        const scale = 1 - Math.abs(distanceFromCenter / containerCenter) * 0.3;
+        
+        // --- THIS IS THE FIX ---
+        // The opacity calculation is removed and is now always '1'
+        tab.style.transform = `scale(${Math.max(0.7, scale)})`;
+        tab.style.opacity = '1';
+    });
+}
 
     // =========================================================================
     // CORE APPLICATION LOGIC & RENDERING
@@ -487,4 +489,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 
 });
+
 
