@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    studentWheelContainer.addEventListener('scroll', updateWheelAnimation);
+  //  studentWheelContainer.addEventListener('scroll', updateWheelAnimation);
 
     // --- Navigation Listeners ---
 
@@ -489,5 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 
 });
+
 
 
