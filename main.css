@@ -409,6 +409,11 @@ body {
     .page {
         padding: 0 10px;
         box-sizing: border-box;
+
+        #details-page {
+    justify-content: center;
+}
+        
     }
 
     .student-tab {
@@ -418,7 +423,7 @@ body {
     }
 
     .months-container {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         padding: 15px;
         width: 100%;
@@ -447,6 +452,7 @@ body {
         width: 90%;
     }
 }
+
 
 
 
