@@ -15,7 +15,7 @@
 }
 
 /* ========================================================================= */
-/* GLOBAL & PAGE STYLES - RESTORED TO YOUR ORIGINAL CODE
+/* GLOBAL & PAGE STYLES - YOUR ORIGINAL CODE
 /* ========================================================================= */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -46,7 +46,7 @@ body {
 }
 
 /* ========================================================================= */
-/* STUDENTS PAGE (WHEEL) - RESTORED TO YOUR ORIGINAL CODE
+/* STUDENTS PAGE (WHEEL) - YOUR ORIGINAL CODE
 /* ========================================================================= */
 #students-page {
     gap: 30px;
@@ -59,6 +59,7 @@ body {
     overflow-y: hidden;
     perspective: 1000px;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
 }
 
 .student-wheel-container::-webkit-scrollbar {
@@ -99,7 +100,7 @@ body {
 }
 
 /* ========================================================================= */
-/* DETAILS PAGE - RESTORED TO YOUR ORIGINAL CODE
+/* DETAILS PAGE - YOUR ORIGINAL CODE
 /* ========================================================================= */
 #details-page {
     justify-content: flex-start;
@@ -136,7 +137,7 @@ body {
 }
 
 /* ========================================================================= */
-/* MONTHS VIEW - RESTORED TO YOUR ORIGINAL CODE
+/* MONTHS VIEW - YOUR ORIGINAL CODE
 /* ========================================================================= */
 .months-container,
 .calendar-container {
@@ -186,7 +187,7 @@ body {
 .month-total-hours.double-digit { min-width: 28px; border-radius: 14px; padding: 0 8px; }
 
 /* ========================================================================= */
-/* CALENDAR VIEW - RESTORED TO YOUR ORIGINAL CODE
+/* CALENDAR VIEW - YOUR ORIGINAL CODE
 /* ========================================================================= */
 .back-btn {
     position: absolute;
@@ -248,13 +249,13 @@ body {
 }
 
 /* ========================================================================= */
-/* ATTENDANCE MODAL - RESTORED & CORRECTED
+/* ATTENDANCE MODAL - YOUR ORIGINAL CODE
 /* ========================================================================= */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(118, 8, 8, 0.5); justify-content: center; align-items: center; }
 .modal-content { background-color: var(--pastel-red); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 15px; width: 350px; border: 1px solid rgba(255,255,255,0.3); }
 .modal-tabs { display: flex; border-bottom: 1px solid #ddd; }
 .modal-tab-btn { flex-grow: 1; background: none; border: none; padding: 10px; font-size: 1rem; font-weight: bold; color: #888; cursor: pointer; border-bottom: 3px solid transparent; }
-.modal-tab-btn.active { color: var(--text-dark); border-bottom-color: var(--burgundy); /* Corrected from --deep-ocean */ }
+.modal-tab-btn.active { color: var(--text-dark); border-bottom-color: var(--burgundy); }
 .modal-view { display: flex; flex-direction: column; gap: 10px; padding: 10px 0; }
 .modal-view.hidden { display: none; }
 #daily-entries-list { max-height: 150px; overflow-y: auto; }
@@ -262,7 +263,7 @@ body {
 .modal-content input { padding: 10px; border-radius: 10px; border: 1px solid #e1d9d9; font-size: 1rem; }
 .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
 .modal-buttons button { padding: 10px 20px; border-radius: 10px; border: none; cursor: pointer; }
-#save-attendance-btn { background-color: var(--burgundy); /* Corrected from --bright-maroon */ color: var(--text-light); font-weight: bold; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); transition: background-color 0.2s ease, transform 0.2s ease; }
+#save-attendance-btn { background-color: var(--burgundy); color: var(--text-light); font-weight: bold; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); transition: background-color 0.2s ease, transform 0.2s ease; }
 #save-attendance-btn:hover { background-color: #510808; transform: translateY(-1px); }
 .delete-entry-btn { background-color: var(--danger-red); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; font-weight: bold; cursor: pointer; flex-shrink: 0; line-height: 22px; text-align: center; }
 
@@ -271,21 +272,29 @@ body {
 /* --- MOBILE RESPONSIVE STYLES (ONLY APPLIES TO SMALL SCREENS) ---
 /* ========================================================================= */
 @media (max-width: 600px) {
-    /* Make pages use full width with some padding */
     .page {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 0 10px;
         box-sizing: border-box;
     }
+    
+    /* Disables the 3D effect on mobile for performance */
+    .student-wheel-container {
+        perspective: none;
+    }
+    .student-wheel {
+        transform-style: flat;
+    }
 
-    /* Reduce student tab size to fit better */
+    /* Styles the student tabs for mobile */
     .student-tab {
         width: 200px;
         padding: 45px 15px;
         font-size: 1.5rem;
+        /* This makes the new simple animation smooth */
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
-
-    /* Change month layout to 3 columns to prevent overflow */
+    
+    /* Changes month layout to 3 columns to prevent overflow */
     .months-container {
         grid-template-columns: repeat(3, 1fr);
         gap: 15px;
@@ -293,7 +302,7 @@ body {
         width: 100%;
     }
 
-    /* Make calendar flexible instead of fixed-width */
+    /* Makes calendar flexible instead of fixed-width */
     .calendar-container {
         width: 100%;
         padding: 15px;
@@ -304,16 +313,16 @@ body {
     }
     .calendar-grid {
         width: 100%;
-        grid-template-columns: repeat(7, 1fr); /* Flexible columns */
+        grid-template-columns: repeat(7, 1fr);
         gap: 2px;
     }
     .calendar-grid div {
-        width: 100%; /* Let grid control the width */
+        width: 100%;
         height: 40px;
         font-size: 0.8rem;
     }
-
-    /* Make modal width responsive */
+    
+    /* Makes modal width responsive */
     .modal-content {
         width: 90%;
     }
