@@ -433,25 +433,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     saveAttendanceBtn.addEventListener('click', () => {
-        const hours = hoursInput.value;
-        const timeRange = timeRangeInput.value;
+    const hours = hoursInput.value;
+    const timeRange = timeRangeInput.value;
 
-        if (!hours || isNaN(hours)) {
-            alert("Please enter a valid number for hours.");
-            return;
-        }
+    if (!hours || isNaN(hours)) {
+        alert("Please enter a valid number for hours.");
+        return;
+    }
 
-        const studentData = students[currentStudentIndex].attendance;
-        if (!studentData[clickedDateStr]) {
-            studentData[clickedDateStr] = [];
-        }
+    // --- THIS IS THE FIX ---
+    // It safely creates an attendance record if one doesn't exist.
+    if (!students[currentStudentIndex].attendance) {
+        students[currentStudentIndex].attendance = {};
+    }
+    // --- END OF FIX ---
 
-        studentData[clickedDateStr].push({ hours: parseFloat(hours), timeRange });
-        saveData();
-        closeAttendanceModal();
-        renderCalendar();
-        populateMonths();
-    });
+    const studentData = students[currentStudentIndex].attendance;
+    if (!studentData[clickedDateStr]) {
+        studentData[clickedDateStr] = [];
+    }
+
+    studentData[clickedDateStr].push({ hours: parseFloat(hours), timeRange });
+    saveData();
+    closeAttendanceModal();
+    renderCalendar();
+    populateMonths();
+});
 
     // Listen for 'Enter' key in the modal inputs
     hoursInput.addEventListener('keydown', handleEnterKey);
@@ -480,3 +487,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 
 });
+
