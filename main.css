@@ -77,8 +77,12 @@ body {
 .student-wheel {
     display: flex;
     align-items: center;
-    padding: 40px 50%;
     gap: 40px;
+    
+    /* --- THIS IS THE FIX --- */
+    /* This calculation adds the perfect amount of empty space to the left
+       and right, allowing the first and last students to snap to the center. */
+    padding: 40px calc(50% - 125px);
 }
 
 .student-tab {
@@ -457,6 +461,7 @@ body {
         width: 90%;
     }
 }
+
 
 
 
