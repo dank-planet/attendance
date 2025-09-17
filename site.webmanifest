@@ -1,6 +1,6 @@
 {
     "name": "Attendance App",
-    "short_name": "Attendance App",
+    "short_name": "Attendance",
     "icons": [
         {
             "src": "/icon.png",
