@@ -44,7 +44,20 @@
             <div class="modal-tabs">
                 <button id="show-add-view-btn" class="modal-tab-btn active">Add Entry</button>
                 <button id="show-list-view-btn" class="modal-tab-btn">View Entries</button>
+    </div>
+
+<div id="report-modal" class="modal">
+    <div class="modal-content report-modal-content">
+        <span class="close-btn" id="close-report-btn">&times;</span>
+        <h3 id="report-title">Monthly Report</h3>
+        <div id="report-table-container">
             </div>
+
+        <button id="download-pdf-btn" class="report-btn">Download as PDF</button>
+
+    </div>
+</div>
+            
     <div id="add-entry-view" class="modal-view">
         <label for="hours-input">Hours:</label>
         <input type="number" id="hours-input">
@@ -63,11 +76,15 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <script src="app.js"></script> 
-   
 </body>
 
+
 </html>
+
 
