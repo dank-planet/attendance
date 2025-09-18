@@ -72,6 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const hoursInput = document.getElementById('hours-input');
     const timeRangeInput = document.getElementById('time-range-input');
 
+    // ADD THESE AT THE END OF THE SELECTORS SECTION
+    const generateReportBtn = document.getElementById('generate-report-btn');
+    const reportModal = document.getElementById('report-modal');
+    const closeReportBtn = document.getElementById('close-report-btn');
+    const reportTitle = document.getElementById('report-title');
+    const reportTableContainer = document.getElementById('report-table-container');
+    
+    // Add this with your other selectors
+    const downloadPdfBtn = document.getElementById('download-pdf-btn');
+
     // =========================================================================
     // HELPER & UTILITY FUNCTIONS
     // =========================================================================
@@ -358,6 +368,110 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ADD THIS ENTIRE NEW FUNCTION
+/**
+ * Collects all attendance for the current month and displays it in a table.
+ */
+function generateMonthlyReport() {
+    if (currentStudentIndex === null) return;
+
+    const student = students[currentStudentIndex];
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const monthName = currentDate.toLocaleString('default', { month: 'long' });
+    
+    // Set the title of the report
+    reportTitle.textContent = `Report for ${student.name} - ${monthName} ${year}`;
+
+    const reportEntries = [];
+    let totalHours = 0;
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // Loop through every day of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+        // Check if there's attendance data for this day
+        if (student.attendance && student.attendance[dateStr]) {
+            student.attendance[dateStr].forEach(entry => {
+                const formattedDate = `${day}/${month + 1}/${year}`;
+                reportEntries.push({
+                    date: formattedDate,
+                    hours: parseFloat(entry.hours),
+                    time: entry.timeRange || 'N/A'
+                });
+                totalHours += parseFloat(entry.hours);
+            });
+        }
+    }
+
+    // Build the HTML table from the collected data
+    if (reportEntries.length === 0) {
+        reportTableContainer.innerHTML = '<p>No attendance entries for this month.</p>';
+    } else {
+        let tableHTML = `
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Hours</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        reportEntries.forEach(entry => {
+            tableHTML += `
+                <tr>
+                    <td>${entry.date}</td>
+                    <td>${entry.hours}</td>
+                    <td>${entry.time}</td>
+                </tr>
+            `;
+        });
+        tableHTML += `
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>${totalHours}</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+        reportTableContainer.innerHTML = tableHTML;
+    }
+
+    // Finally, show the report modal
+    reportModal.style.display = 'flex';
+}
+
+    /**
+ * Downloads the content of the report modal as a styled PDF.
+ */
+function downloadReportAsPDF() {
+    // 1. Get the element that we want to convert to PDF.
+    const reportContent = document.querySelector('.report-modal-content');
+    const studentName = students[currentStudentIndex].name.replace(' ', '_');
+    const monthName = currentDate.toLocaleString('default', { month: 'long' });
+    const year = currentDate.getFullYear();
+    const fileName = `Report_${studentName}_${monthName}_${year}.pdf`;
+
+    // 2. Set the options for the PDF generation.
+    const options = {
+        margin:       0.5,
+        filename:     fileName,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // 3. Run the html2pdf function and save the file.
+    html2pdf().set(options).from(reportContent).save();
+}
+    
+
     // =========================================================================
     // EVENT LISTENERS
     // =========================================================================
@@ -490,5 +604,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// ADD THESE NEW LISTENERS
+
+// When the "View Report" button is clicked, run the function
+generateReportBtn.addEventListener('click', generateMonthlyReport);
+
+// When the 'X' button on the report is clicked, close it
+closeReportBtn.addEventListener('click', () => {
+    reportModal.style.display = 'none';
+});
+
+// Also close the report modal if the background is clicked
+reportModal.addEventListener('click', (event) => {
+    if (event.target === reportModal) {
+        reportModal.style.display = 'none';
+    }
+});
+
+// Add this listener to trigger the PDF download
+downloadPdfBtn.addEventListener('click', downloadReportAsPDF);
 
 
