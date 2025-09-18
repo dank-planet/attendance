@@ -454,6 +454,75 @@ body {
     }
 }
 
+/* ========================================================================= */
+/* MONTHLY REPORT STYLES
+/* ========================================================================= */
+
+.report-btn {
+    background-color: var(--deep-brown);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.report-btn:hover {
+    background-color: #3d2b22;
+}
+
+/* Make the report modal a bit wider */
+.report-modal-content {
+    width: 450px;
+    max-width: 90%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+#report-table-container {
+    max-height: 60vh;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.report-table th, .report-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.report-table th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+}
+
+.report-table tfoot {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+
 
 
 
