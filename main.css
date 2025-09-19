@@ -344,3 +344,24 @@ body {
         width: 90%;
     }
 }
+
+
+
+/* ========================================================================= */
+/* 7. PDF EXPORT STYLES
+/* ========================================================================= */
+
+.pdf-container {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 8.27in;
+    height: 11.69in;
+    /* --- THIS IS THE FIX --- */
+    background: #e0e0e0 url('/background.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
